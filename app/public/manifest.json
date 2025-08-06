@@ -1,0 +1,21 @@
+{
+  "name": "AI钓点图",
+  "short_name": "钓点图",
+  "description": "通过AI智能标记和分享您的钓鱼点",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff"
+}
