@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import AiAssistantModal from '@/components/AiAssistantModal';
 import SpotList from '@/components/SpotList';
 import { getOrCreateUser, updateUserLocation } from '@/lib/user';
-import { Switch } from '@/components/ui/switch';
 
 const Map = dynamic(() => import('@/components/Map'), {
   ssr: false,
@@ -19,6 +18,7 @@ export interface SpotData {
   fish_type: string | null;
   bait: string | null;
   environment: string | null;
+  rod: string | null;
   created_at: string;
 }
 
@@ -28,12 +28,23 @@ export type MarkerData = {
   popupContent: string;
 };
 
+// User interface
+interface User {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  lastSeen: Date;
+  isOnline: boolean;
+  is_sharing?: boolean;
+}
+
 export default function Home() {
   const [spots, setSpots] = useState<SpotData[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState<[number, number] | null>(null);
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  const [nearbyUsers, setNearbyUsers] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [nearbyUsers, setNearbyUsers] = useState<User[]>([]);
   const [mapCenter, setMapCenter] = useState<[number, number]>([31.2304, 121.4737]); // Default to Shanghai
 
   // Forcefully manage map z-index when modal opens/closes
@@ -155,19 +166,18 @@ export default function Home() {
   };
 
   // 新增：切换共享钓点状态
-  const handleToggleSharing = async () => {
+  const handleToggleSharing = async (isSharing: boolean) => {
     if (!currentUser) return;
-    const newSharing = !currentUser.is_sharing;
-    setCurrentUser({ ...currentUser, is_sharing: newSharing });
+    setCurrentUser({ ...currentUser, is_sharing: isSharing });
     try {
       await fetch('/api/users', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: currentUser.id, isSharing: newSharing })
+        body: JSON.stringify({ userId: currentUser.id, isSharing })
       });
-    } catch (e) {
+    } catch (error) {
       // 回滚
-      setCurrentUser({ ...currentUser, is_sharing: !newSharing });
+      setCurrentUser({ ...currentUser, is_sharing: !isSharing });
       alert('切换共享状态失败');
     }
   };
@@ -191,13 +201,10 @@ export default function Home() {
   };
 
   return (
-    <main style={{ position: 'relative', height: '100vh' }}>
-      {/* SpotList上方的共享钓点切换 */}
-      <div className="absolute top-20 right-4 z-[1000] flex items-center space-x-2 bg-white/95 backdrop-blur-sm px-4 py-3 rounded-xl shadow-lg border border-gray-200/50">
-        <span className="text-sm font-medium text-gray-700">共享我的钓点</span>
-        <Switch checked={!!currentUser?.is_sharing} onCheckedChange={handleToggleSharing} />
-        <span className={`text-xs font-semibold ${currentUser?.is_sharing ? 'text-green-600' : 'text-gray-500'}`}>{currentUser?.is_sharing ? 'ON' : 'OFF'}</span>
-      </div>
+    <main className="relative h-screen w-full overflow-hidden">
+      {/* 移动端状态栏适配 */}
+      <div className="fixed top-0 left-0 right-0 h-0 bg-transparent z-[9999] sm:hidden" />
+      
       <Map 
         key={spots.length} 
         center={mapCenter}
@@ -208,7 +215,15 @@ export default function Home() {
         currentUserId={currentUser?.id}
         refreshSpots={refreshSpots}
       />
-      <SpotList spots={spots} onSpotSelect={handleSpotSelect} onDeleteSpot={handleDeleteSpot} />
+      
+      <SpotList 
+        spots={spots} 
+        onSpotSelect={handleSpotSelect} 
+        onDeleteSpot={handleDeleteSpot}
+        currentUser={currentUser}
+        onToggleSharing={handleToggleSharing}
+      />
+      
       <AiAssistantModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

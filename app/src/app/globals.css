@@ -44,7 +44,7 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.75rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -118,6 +118,549 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+  
+  /* 移动端优化 */
+  html {
+    font-size: 16px;
+  }
+  
+  /* 触摸友好的按钮 */
+  button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* 移动端滚动优化 */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* 防止移动端缩放 */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* 移动端优化的卡片样式 */
+.mobile-card {
+  @apply bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-card:hover {
+  @apply shadow-2xl;
+  transform: translateY(-2px);
+}
+
+/* 移动端优化的按钮样式 */
+.mobile-button {
+  @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg;
+  @apply hover:from-blue-600 hover:to-blue-700 active:from-blue-700 active:to-blue-800;
+  @apply transition-all duration-200 ease-out;
+  @apply min-h-[44px] px-4 py-2;
+  touch-action: manipulation;
+}
+
+.mobile-button:active {
+  transform: scale(0.98);
+}
+
+/* 移动端优化的开关样式 */
+.mobile-switch {
+  @apply relative inline-flex h-7 w-12 items-center rounded-full transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  touch-action: manipulation;
+}
+
+.mobile-switch-thumb {
+  @apply inline-block h-5 w-5 transform rounded-full bg-white transition-transform;
+  @apply shadow-lg;
+}
+
+/* 移动端优化的输入框样式 */
+.mobile-input {
+  @apply bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl;
+  @apply px-4 py-3 text-base font-medium;
+  @apply focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply transition-all duration-200;
+  min-height: 48px;
+}
+
+/* 移动端优化的列表样式 */
+.mobile-list {
+  @apply bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl;
+  @apply border border-gray-200/50 overflow-hidden;
+}
+
+.mobile-list-item {
+  @apply p-4 border-b border-gray-100 last:border-b-0;
+  @apply hover:bg-gray-50 active:bg-gray-100;
+  @apply transition-colors duration-200;
+  min-height: 60px;
+  touch-action: manipulation;
+}
+
+/* 移动端优化的模态框样式 */
+.mobile-modal {
+  @apply bg-white/98 backdrop-blur-md rounded-3xl shadow-2xl;
+  @apply border border-gray-200/50;
+  @apply max-w-sm mx-auto;
+}
+
+/* 移动端优化的浮动按钮 */
+.floating-button {
+  @apply fixed bottom-6 right-6 z-50;
+  @apply w-14 h-14 rounded-full shadow-2xl;
+  @apply bg-gradient-to-r from-blue-500 to-purple-600;
+  @apply hover:from-blue-600 hover:to-purple-700;
+  @apply text-white font-bold text-lg;
+  @apply flex items-center justify-center;
+  @apply transition-all duration-300 ease-out;
+  @apply hover:scale-110 active:scale-95;
+  touch-action: manipulation;
+}
+
+/* 移动端优化的顶部导航 */
+.mobile-top-nav {
+  @apply fixed top-0 left-0 right-0 z-40;
+  @apply bg-white/95 backdrop-blur-md border-b border-gray-200/50;
+  @apply px-4 py-3;
+  @apply flex items-center justify-between;
+}
+
+/* 移动端优化的底部导航 */
+.mobile-bottom-nav {
+  @apply fixed bottom-0 left-0 right-0 z-40;
+  @apply bg-white/95 backdrop-blur-md border-t border-gray-200/50;
+  @apply px-4 py-2;
+  @apply flex items-center justify-around;
+}
+
+/* 响应式工具类 */
+@media (max-width: 640px) {
+  .mobile-container {
+    @apply px-4;
+  }
+  
+  .mobile-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .mobile-text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  
+  .mobile-text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .mobile-card {
+    @apply bg-gray-900/95 border-gray-700/50;
+  }
+  
+  .mobile-button {
+    @apply from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800;
+  }
+  
+  .mobile-input {
+    @apply bg-gray-800/90 border-gray-600/50 text-white;
+  }
+  
+  .mobile-list {
+    @apply bg-gray-900/95 border-gray-700/50;
+  }
+  
+  .mobile-list-item {
+    @apply border-gray-700 hover:bg-gray-800 active:bg-gray-700;
+  }
+  
+  .mobile-modal {
+    @apply bg-gray-900/98 border-gray-700/50;
+  }
+  
+  .mobile-top-nav,
+  .mobile-bottom-nav {
+    @apply bg-gray-900/95 border-gray-700/50;
+  }
+}
+
+/* 自定义搜索栏样式 */
+.leaflet-control-geosearch {
+  margin: 10px !important;
+  position: absolute !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+}
+
+.leaflet-control-geosearch form {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  padding: 12px !important;
+  transition: all 0.3s ease !important;
+  min-width: 320px !important;
+  max-width: 90vw !important;
+}
+
+.leaflet-control-geosearch form:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.leaflet-control-geosearch input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+  padding: 10px 16px !important;
+  width: 240px !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+.leaflet-control-geosearch input::placeholder {
+  color: #9CA3AF !important;
+  font-weight: 400 !important;
+}
+
+.leaflet-control-geosearch input:focus {
+  background: rgba(59, 130, 246, 0.05) !important;
+  color: #1F2937 !important;
+}
+
+.leaflet-control-geosearch button {
+  background: linear-gradient(135deg, #3B82F6, #1D4ED8) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+  margin-left: 8px !important;
+}
+
+.leaflet-control-geosearch button:hover {
+  background: linear-gradient(135deg, #2563EB, #1E40AF) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+}
+
+.leaflet-control-geosearch button:active {
+  transform: translateY(0) !important;
+}
+
+/* 隐藏搜索框中的图标 */
+.leaflet-control-geosearch .geosearch-input-button {
+  display: none !important;
+}
+
+.leaflet-control-geosearch .geosearch-input {
+  padding-left: 16px !important;
+}
+
+/* 搜索结果样式 */
+.leaflet-control-geosearch-msg {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 8px !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1001 !important;
+  width: 100% !important;
+}
+
+.leaflet-control-geosearch-msg ul {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.leaflet-control-geosearch-msg li {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-size: 14px !important;
+  color: #374151 !important;
+  word-wrap: break-word !important;
+  white-space: normal !important;
+  line-height: 1.4 !important;
+}
+
+.leaflet-control-geosearch-msg li:last-child {
+  border-bottom: none !important;
+}
+
+.leaflet-control-geosearch-msg li:hover {
+  background: rgba(59, 130, 246, 0.08) !important;
+  color: #1F2937 !important;
+}
+
+.leaflet-control-geosearch-msg li.active {
+  background: rgba(59, 130, 246, 0.12) !important;
+  color: #1F2937 !important;
+  font-weight: 600 !important;
+}
+
+/* 搜索标记样式优化 */
+.custom-search-marker {
+  animation: pulse 2s infinite !important;
+}
+
+.custom-search-marker div {
+  background: linear-gradient(135deg, #3B82F6, #1D4ED8) !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  border: 3px solid white !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7) !important;
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0) !important;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0) !important;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .leaflet-control-geosearch {
+    top: 10px !important;
+    margin: 5px !important;
+  }
+  
+  .leaflet-control-geosearch form {
+    min-width: 280px !important;
+    max-width: calc(100vw - 20px) !important;
+    padding: 10px !important;
+  }
+  
+  .leaflet-control-geosearch input {
+    width: 200px !important;
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+  }
+  
+  .leaflet-control-geosearch button {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+  
+  .leaflet-control-geosearch-msg {
+    max-height: 250px !important;
+    width: 100% !important;
+  }
+  
+  .leaflet-control-geosearch-msg li {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .leaflet-control-geosearch form {
+    min-width: 240px !important;
+    max-width: calc(100vw - 16px) !important;
+    padding: 8px !important;
+  }
+  
+  .leaflet-control-geosearch input {
+    width: 160px !important;
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+  
+  .leaflet-control-geosearch button {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
+  
+  .leaflet-control-geosearch-msg li {
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .leaflet-control-geosearch form {
+    background: rgba(31, 41, 55, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .leaflet-control-geosearch input {
+    color: #F9FAFB !important;
+  }
+  
+  .leaflet-control-geosearch input::placeholder {
+    color: #9CA3AF !important;
+  }
+  
+  .leaflet-control-geosearch input:focus {
+    background: rgba(59, 130, 246, 0.1) !important;
+    color: #F9FAFB !important;
+  }
+  
+  .leaflet-control-geosearch-msg {
+    background: rgba(31, 41, 55, 0.98) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .leaflet-control-geosearch-msg li {
+    color: #F9FAFB !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .leaflet-control-geosearch-msg li:hover {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #F9FAFB !important;
+  }
+  
+  .leaflet-control-geosearch-msg li.active {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #F9FAFB !important;
+  }
+}
+
+/* 移动端地图优化 */
+.mobile-map {
+  touch-action: manipulation;
+}
+
+.mobile-map .leaflet-container {
+  touch-action: manipulation;
+}
+
+.mobile-map .leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  max-width: 400px !important;
+  min-width: 280px !important;
+}
+
+.mobile-map .leaflet-popup-content {
+  margin: 0 !important;
+  border-radius: 16px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.mobile-map .leaflet-popup-tip {
+  background: white !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 搜索弹窗特殊样式 */
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+  word-wrap: break-word !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: break-all !important;
+}
+
+/* 移动端滚动条优化 */
+.mobile-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.mobile-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* 移动端动画优化 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 移动端安全区域适配 */
+@supports (padding: max(0px)) {
+  .mobile-safe-top {
+    padding-top: max(env(safe-area-inset-top), 0px);
+  }
+  
+  .mobile-safe-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+  
+  .mobile-safe-left {
+    padding-left: max(env(safe-area-inset-left), 0px);
+  }
+  
+  .mobile-safe-right {
+    padding-right: max(env(safe-area-inset-right), 0px);
+  }
+}
+
+/* 移动端触摸反馈 */
+@media (hover: none) and (pointer: coarse) {
+  .mobile-card:hover {
+    transform: none;
+  }
+  
+  .mobile-button:hover {
+    transform: none;
+  }
+  
+  .mobile-list-item:hover {
+    background: transparent;
+  }
+  
+  .mobile-list-item:active {
+    background: rgba(0, 0, 0, 0.05);
   }
 }
 
