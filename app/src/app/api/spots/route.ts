@@ -45,7 +45,7 @@ export async function DELETE(request: NextRequest) {
     }
     const db = await getDb();
     const result = await db.run('DELETE FROM fishing_spots WHERE id = ? AND user_id = ?', id, userId);
-    if (result.changes > 0) {
+    if ((result.changes ?? 0) > 0) {
       return NextResponse.json({ success: true });
     } else {
       return NextResponse.json({ error: 'Not found or not allowed' }, { status: 404 });

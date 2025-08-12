@@ -91,17 +91,17 @@ const CustomZoomControl = () => {
         <div className="flex flex-col space-y-1">
           <button
             onClick={zoomIn}
-            className="w-10 h-10 bg-white hover:bg-gray-50 active:bg-gray-100 rounded-xl shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105"
+            className="w-10 h-10 bg-black/80 text-white hover:bg-black rounded-xl shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 border border-white/10"
             title="放大"
           >
-            <Plus size={20} className="text-gray-700" />
+            <Plus size={20} />
           </button>
           <button
             onClick={zoomOut}
-            className="w-10 h-10 bg-white hover:bg-gray-50 active:bg-gray-100 rounded-xl shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105"
+            className="w-10 h-10 bg-black/80 text-white hover:bg-black rounded-xl shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 border border-white/10"
             title="缩小"
           >
-            <Minus size={20} className="text-gray-700" />
+            <Minus size={20} />
           </button>
         </div>
       </div>
@@ -110,10 +110,10 @@ const CustomZoomControl = () => {
       <div className="mobile-card p-2">
         <button
           onClick={goToUserLocation}
-          className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105"
+          className="w-10 h-10 bg-black/80 text-white hover:bg-black rounded-xl shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 border border-white/10"
           title="定位到我的位置"
         >
-          <Navigation size={20} className="text-white" />
+          <Navigation size={20} />
         </button>
       </div>
     </div>
@@ -164,8 +164,11 @@ const Map = ({ center, markers, selectedPosition, onAiButtonClick, nearbyUsers, 
           subdomains={['1', '2', '3', '4']}
         />
         
+        {/* 搜索框置于更低z-index，避免与左上角列表重叠 */}
         <SearchBox />
+        {/* AI 按钮右下角，放在浮层最上层，避免遮挡 */}
         <AiButtonControl onClick={onAiButtonClick} />
+        {/* 自定义缩放/定位控件靠右上，玻璃风样式在CSS中 */}
         <CustomZoomControl />
         <MapUpdater position={selectedPosition} />
 

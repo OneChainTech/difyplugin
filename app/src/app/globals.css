@@ -149,7 +149,8 @@
 
 /* 移动端优化的卡片样式 */
 .mobile-card {
-  @apply bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50;
+  /* 黑白玻璃风 */
+  @apply bg-white/40 dark:bg-black/30 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 dark:border-white/10;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -160,8 +161,9 @@
 
 /* 移动端优化的按钮样式 */
 .mobile-button {
-  @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg;
-  @apply hover:from-blue-600 hover:to-blue-700 active:from-blue-700 active:to-blue-800;
+  /* 统一按钮为黑白玻璃质感 */
+  @apply bg-black/80 text-white font-semibold rounded-xl shadow-lg border border-white/10;
+  @apply hover:bg-black/90 active:bg-black;
   @apply transition-all duration-200 ease-out;
   @apply min-h-[44px] px-4 py-2;
   touch-action: manipulation;
@@ -185,17 +187,17 @@
 
 /* 移动端优化的输入框样式 */
 .mobile-input {
-  @apply bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl;
+  @apply bg-white/40 dark:bg-black/30 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-xl;
   @apply px-4 py-3 text-base font-medium;
-  @apply focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply focus:ring-2 focus:ring-gray-500 focus:border-transparent;
   @apply transition-all duration-200;
   min-height: 48px;
 }
 
 /* 移动端优化的列表样式 */
 .mobile-list {
-  @apply bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl;
-  @apply border border-gray-200/50 overflow-hidden;
+  @apply bg-white/40 dark:bg-black/30 backdrop-blur-xl rounded-2xl shadow-xl;
+  @apply border border-white/20 dark:border-white/10 overflow-hidden;
 }
 
 .mobile-list-item {
@@ -208,8 +210,8 @@
 
 /* 移动端优化的模态框样式 */
 .mobile-modal {
-  @apply bg-white/98 backdrop-blur-md rounded-3xl shadow-2xl;
-  @apply border border-gray-200/50;
+  @apply bg-white/40 dark:bg-black/40 backdrop-blur-2xl rounded-3xl shadow-2xl;
+  @apply border border-white/20 dark:border-white/10;
   @apply max-w-sm mx-auto;
 }
 
@@ -229,7 +231,7 @@
 /* 移动端优化的顶部导航 */
 .mobile-top-nav {
   @apply fixed top-0 left-0 right-0 z-40;
-  @apply bg-white/95 backdrop-blur-md border-b border-gray-200/50;
+  @apply bg-white/40 dark:bg-black/30 backdrop-blur-xl border-b border-white/20 dark:border-white/10;
   @apply px-4 py-3;
   @apply flex items-center justify-between;
 }
@@ -237,7 +239,7 @@
 /* 移动端优化的底部导航 */
 .mobile-bottom-nav {
   @apply fixed bottom-0 left-0 right-0 z-40;
-  @apply bg-white/95 backdrop-blur-md border-t border-gray-200/50;
+  @apply bg-white/40 dark:bg-black/30 backdrop-blur-xl border-t border-white/20 dark:border-white/10;
   @apply px-4 py-2;
   @apply flex items-center justify-around;
 }
@@ -267,7 +269,7 @@
 /* 深色模式支持 */
 @media (prefers-color-scheme: dark) {
   .mobile-card {
-    @apply bg-gray-900/95 border-gray-700/50;
+    @apply bg-black/40 border-white/10;
   }
   
   .mobile-button {
@@ -275,19 +277,19 @@
   }
   
   .mobile-input {
-    @apply bg-gray-800/90 border-gray-600/50 text-white;
+    @apply bg-black/40 border-white/10 text-white;
   }
   
   .mobile-list {
-    @apply bg-gray-900/95 border-gray-700/50;
+    @apply bg-black/40 border-white/10;
   }
   
   .mobile-list-item {
-    @apply border-gray-700 hover:bg-gray-800 active:bg-gray-700;
+    @apply border-white/10 hover:bg-white/5 active:bg-white/10;
   }
   
   .mobile-modal {
-    @apply bg-gray-900/98 border-gray-700/50;
+    @apply bg-black/50 border-white/10;
   }
   
   .mobile-top-nav,
@@ -303,13 +305,14 @@
   top: 20px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
-  z-index: 1000 !important;
+  /* 置于其他浮层之上，避免被覆盖 */
+  z-index: 1400 !important;
 }
 
 .leaflet-control-geosearch form {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
   border-radius: 16px !important;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
   padding: 12px !important;
@@ -328,7 +331,7 @@
   outline: none !important;
   font-size: 14px !important;
   font-weight: 500 !important;
-  color: #374151 !important;
+  color: #111827 !important; /* 黑 */
   padding: 10px 16px !important;
   width: 240px !important;
   border-radius: 12px !important;
@@ -341,13 +344,13 @@
 }
 
 .leaflet-control-geosearch input:focus {
-  background: rgba(59, 130, 246, 0.05) !important;
-  color: #1F2937 !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #111827 !important;
 }
 
 .leaflet-control-geosearch button {
-  background: linear-gradient(135deg, #3B82F6, #1D4ED8) !important;
-  border: none !important;
+  background: rgba(0,0,0,0.85) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
   border-radius: 12px !important;
   color: white !important;
   padding: 10px 20px !important;
@@ -355,14 +358,14 @@
   font-weight: 600 !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
   margin-left: 8px !important;
 }
 
 .leaflet-control-geosearch button:hover {
-  background: linear-gradient(135deg, #2563EB, #1E40AF) !important;
+  background: rgba(0,0,0,0.92) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
 }
 
 .leaflet-control-geosearch button:active {
@@ -392,7 +395,7 @@
   top: 100% !important;
   left: 0 !important;
   right: 0 !important;
-  z-index: 1001 !important;
+  z-index: 1500 !important;
   width: 100% !important;
 }
 
@@ -435,12 +438,12 @@
 }
 
 .custom-search-marker div {
-  background: linear-gradient(135deg, #3B82F6, #1D4ED8) !important;
+  background: rgba(0,0,0,0.85) !important;
   width: 32px !important;
   height: 32px !important;
   border-radius: 50% !important;
-  border: 3px solid white !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  border: 3px solid rgba(255,255,255,0.8) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -525,8 +528,8 @@
 /* 深色模式支持 */
 @media (prefers-color-scheme: dark) {
   .leaflet-control-geosearch form {
-    background: rgba(31, 41, 55, 0.95) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(0, 0, 0, 0.55) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
   }
   
   .leaflet-control-geosearch input {
@@ -538,7 +541,7 @@
   }
   
   .leaflet-control-geosearch input:focus {
-    background: rgba(59, 130, 246, 0.1) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
     color: #F9FAFB !important;
   }
   
@@ -553,12 +556,12 @@
   }
   
   .leaflet-control-geosearch-msg li:hover {
-    background: rgba(59, 130, 246, 0.15) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
     color: #F9FAFB !important;
   }
   
   .leaflet-control-geosearch-msg li.active {
-    background: rgba(59, 130, 246, 0.2) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
     color: #F9FAFB !important;
   }
 }

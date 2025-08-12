@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Textarea } from "@/components/ui/textarea";
 import { Sparkles, MapPin, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
-import eviltransform from 'eviltransform';
+// 动态导入以避免在 SSR/预渲染阶段执行不兼容代码
 
 interface AiAssistantModalProps {
   isOpen: boolean;
@@ -47,6 +47,7 @@ const AiAssistantModal = ({ isOpen, onClose, onAddSpot, userId }: AiAssistantMod
         let correctedLat, correctedLng;
         
         try {
+          const { default: eviltransform } = await import('eviltransform');
           const correctedCoords = eviltransform.wgs2gcj(latitude, longitude);
           console.log('Original coordinates:', { latitude, longitude });
           console.log('Corrected coordinates:', correctedCoords);
@@ -76,7 +77,12 @@ const AiAssistantModal = ({ isOpen, onClose, onAddSpot, userId }: AiAssistantMod
         }
 
         try {
-          const requestBody = { message: userInput, latitude: correctedLat, longitude: correctedLng, userId };
+          // 兜底：若调用方未传 userId，则从本地存储读取
+          const ensuredUserId = userId || localStorage.getItem('userId') || undefined;
+          if (!ensuredUserId) {
+            throw new Error('未获取到用户ID，请刷新页面后重试');
+          }
+          const requestBody = { message: userInput, latitude: correctedLat, longitude: correctedLng, userId: ensuredUserId };
           console.log('Sending request:', requestBody);
           
           const res = await fetch('/api/chat', {
